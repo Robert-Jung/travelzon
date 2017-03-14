@@ -1,2 +1,2 @@
 # travelzon
-A website where shoppers can buy online
+A website for people who want to buy a destination package.
