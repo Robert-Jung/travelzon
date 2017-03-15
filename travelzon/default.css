@@ -21,10 +21,6 @@
   background-color: rgba(6, 6, 6, 0.3);
 }
 
-.container:hover .overlay {
-  opacity: 1;
-}
-
 .text {
   color: white;
   font-size: 15px;
@@ -32,4 +28,8 @@
   top: 30%;
   left: 5%;
   right: 5%;
+}
+
+.imgoverlay:hover .overlay {
+  opacity: 1;
 }

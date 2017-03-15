@@ -36,7 +36,7 @@ document.body.appendChild($wrapper).classList.add('container')
 
 //Main deal banner
 var $wrapperMain = document.createElement('div')
-$wrapper.appendChild($wrapperMain).classList.add('container')
+$wrapper.appendChild($wrapperMain).classList.add('row')
 
 for (var i = 0; i < 1; i++) {
   var $div = document.createElement('div')
@@ -53,17 +53,17 @@ for (var i = 0; i < 1; i++) {
 
 //Rows
 var $wrapperRow = document.createElement('div')
-$wrapper.appendChild($wrapperRow).classList.add('container')
+$wrapper.appendChild($wrapperRow).classList.add('row')
 
 for (var i = 1; i < travelPackage.length; i++) {
   var $div = document.createElement('div')
   var $img = document.createElement('img')
   var $p = document.createElement('p')
   var $desc = document.createElement('div')
-  $img.setAttribute('src', travelPackage[i].img)
   $desc.textContent = travelPackage[i].description
+  $img.setAttribute('src', travelPackage[i].img)
 
-  $wrapperRow.appendChild($div).classList.add('container', 'col-md-6', 'spacing')
+  $wrapperRow.appendChild($div).classList.add('container', 'col-md-6', 'spacing', 'imgoverlay')
   $div.appendChild($img).classList.add('img-responsive', 'resize')
   $div.appendChild($p).classList.add('overlay')
   $p.appendChild($desc).classList.add('text')
