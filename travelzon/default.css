@@ -28,6 +28,7 @@
   top: 30%;
   left: 5%;
   right: 5%;
+  text-align: center;
 }
 
 .imgoverlay:hover .overlay {
