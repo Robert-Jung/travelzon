@@ -1,48 +1,70 @@
+var travelPackage = [
+  {
+  destination: 'Main Location',
+  price: '$9999',
+  img: 'main.jpg',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+  },
+  {
+  destination: 'Location 1',
+  price: '$1111',
+  img: '1.jpg',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+  },
+  {
+  destination: 'Location 2',
+  price: '$2222',
+  img: '2.jpg',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+  },
+  {
+  destination: 'Location 3',
+  price: '$3333',
+  img: '3.jpg',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+  },
+  {
+  destination: 'Location 4',
+  price: '$4444',
+  img: '4.jpg',
+  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+  }
+  ]
+
+var $wrapper = document.createElement('div')
+document.body.appendChild($wrapper).classList.add('container')
+
 //Main deal banner
-var $topDiv = document.createElement('div')
-var $topRow = document.createElement('div')
-var $topLeftCol = document.createElement('div')
-var $mainImg = document.createElement('img')
+var $wrapperMain = document.createElement('div')
+$wrapper.appendChild($wrapperMain).classList.add('row')
 
-document.body.appendChild($topDiv).classList.add('container')
-$topDiv.appendChild($topRow).classList.add('row')
-$topRow.appendChild($topLeftCol).classList.add('col-md-6')
-$topLeftCol.appendChild($mainImg).classList.add('img-responsive', 'resize')
+for (var i = 0; i < 1; i++) {
+  var $div = document.createElement('div')
+  var $rightCol = document.createElement('div')
+  var $img = document.createElement('img')
 
-$mainImg.setAttribute('src', 'main.jpg')
+  $img.setAttribute('src', travelPackage[i].img)
+  $rightCol.textContent = travelPackage[i].description
 
-//Row One
-var $div = document.createElement('div')
-var $row = document.createElement('div')
-var $leftCol = document.createElement('div')
-var $rightCol = document.createElement('div')
-var $imgOne = document.createElement('img')
-var $imgTwo = document.createElement('img')
+  $wrapperMain.appendChild($div).classList.add('container', 'col-md-6', 'spacing')
+  $div.appendChild($img).classList.add('img-responsive', 'resize')
+  $wrapperMain.appendChild($rightCol).classList.add('col-md-6', 'spacing')
+}
 
-document.body.appendChild($div).classList.add('container')
-$div.appendChild($row).classList.add('row')
-$row.appendChild($leftCol).classList.add('col-md-6')
-$row.appendChild($rightCol).classList.add('col-md-6')
-$leftCol.appendChild($imgOne).classList.add('img-responsive', 'resize')
-$rightCol.appendChild($imgTwo).classList.add('img-responsive', 'resize')
+//Rows
+var $wrapperRow = document.createElement('div')
+$wrapper.appendChild($wrapperRow).classList.add('row')
 
-$imgOne.setAttribute('src', '1.jpg')
-$imgTwo.setAttribute('src', '2.jpg')
+for (var i = 1; i < travelPackage.length; i++) {
+  var $div = document.createElement('div')
+  var $img = document.createElement('img')
+  var $p = document.createElement('p')
+  var $desc = document.createElement('div')
+  $desc.textContent = travelPackage[i].description
+  $img.setAttribute('src', travelPackage[i].img)
 
-//Row Two
-var $div = document.createElement('div')
-var $row = document.createElement('div')
-var $leftCol = document.createElement('div')
-var $rightCol = document.createElement('div')
-var $imgOne = document.createElement('img')
-var $imgTwo = document.createElement('img')
-
-document.body.appendChild($div).classList.add('container')
-$div.appendChild($row).classList.add('row')
-$row.appendChild($leftCol).classList.add('col-md-6')
-$row.appendChild($rightCol).classList.add('col-md-6')
-$leftCol.appendChild($imgOne).classList.add('img-responsive', 'resize')
-$rightCol.appendChild($imgTwo).classList.add('img-responsive', 'resize')
-
-$imgOne.setAttribute('src', '3.jpg')
-$imgTwo.setAttribute('src', '4.jpg')
+  $wrapperRow.appendChild($div).classList.add('container', 'col-md-6', 'spacing', 'imgoverlay')
+  $div.appendChild($img).classList.add('img-responsive', 'resize')
+  $div.appendChild($p).classList.add('overlay')
+  $p.appendChild($desc).classList.add('text')
+}
