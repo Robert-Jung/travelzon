@@ -1,35 +1,36 @@
 //package array
-var travelPackage = [
-  {
-  id: 1,
-  destination: 'Location 1',
-  price: 1111,
-  img: '1.jpg',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
-  },
-  {
-  id: 2,
-  destination: 'Location 2',
-  price: 2222,
-  img: '2.jpg',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
-  },
-  {
-  id: 3,
-  destination: 'Location 3',
-  price: 3333,
-  img: '3.jpg',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
-  },
-  {
-  id: 4,
-  destination: 'Location 4',
-  price: 4444,
-  img: '4.jpg',
-  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
-  }
-  ]
-
+var app = [
+    cart = [],
+    travelPackage = [
+    {
+    id: 1,
+    destination: 'Location 1',
+    price: 1111,
+    img: '1.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+    },
+    {
+    id: 2,
+    destination: 'Location 2',
+    price: 2222,
+    img: '2.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+    },
+    {
+    id: 3,
+    destination: 'Location 3',
+    price: 3333,
+    img: '3.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+    },
+    {
+    id: 4,
+    destination: 'Location 4',
+    price: 4444,
+    img: '4.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vel pulvinar nibh. Suspendisse lobortis, ipsum eget vulputate rutrum, erat sem facilisis lectus, tempor vehicula augue neque at tortor.'
+    }]
+]
 //wrapper
 var $wrapper = document.createElement('div')
 document.body.appendChild($wrapper).classList.add('container')
@@ -109,3 +110,8 @@ function singlePage (event) {
 }
 
 $wrapperRow.addEventListener('click', singlePage)
+
+//add to cart
+var $cartDisplay = document.createElement('span')
+$cartDisplay.textContent = cart.length
+$nav.appendChild($cartDisplay).classList.add('cartDisplay')
