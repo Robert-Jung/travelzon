@@ -34,3 +34,19 @@
 .imgoverlay:hover .overlay {
   opacity: 1;
 }
+
+.glyphicon-shopping-cart {
+  float: right;
+  right: 20px;
+  top: 10px;
+  font-size: 25px;
+  color: white;
+}
+
+#home {
+  position: relative;
+  top: 5px;
+  color: white;
+  background-color: transparent;
+  border-color: transparent;
+}

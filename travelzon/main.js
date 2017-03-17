@@ -32,12 +32,24 @@ var travelPackage = [
 
 //wrapper
 var $wrapper = document.createElement('div')
-var $wrapperRow = document.createElement('div')
-
 document.body.appendChild($wrapper).classList.add('container')
-$wrapper.appendChild($wrapperRow).classList.add('row')
+
+//nav bar for home return and cart
+var $nav = document.createElement('nav')
+$wrapper.appendChild($nav).classList.add('navbar', 'navbar-inverse')
+
+var $navCart = document.createElement('span')
+$nav.appendChild($navCart).classList.add('glyphicon', 'glyphicon-shopping-cart')
+
+var $homeBtn = document.createElement('button')
+$homeBtn.id = 'home'
+$homeBtn.textContent = 'HOME'
+$nav.appendChild($homeBtn).classList.add('btn', 'btn-default')
 
 // Rows
+var $wrapperRow = document.createElement('div')
+$wrapper.appendChild($wrapperRow).classList.add('row')
+
 function render(packages) {
   for (var i = 0; i < travelPackage.length; i++) {
     var $div = document.createElement('div')
