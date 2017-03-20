@@ -12,10 +12,10 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
+  left: 15px;
   right: 0;
   height: 100%;
-  width: 100%;
+  width: 95%;
   opacity: 0;
   transition: 0.5s ease;
   background-color: rgba(6, 6, 6, 0.3);
@@ -33,4 +33,32 @@
 
 .imgoverlay:hover .overlay {
   opacity: 1;
+}
+
+.glyphicon-shopping-cart {
+  position: relative;
+  float: right;
+  right: 23px;
+  top: 10px;
+  font-size: 35px;
+  color: white;
+  z-index: 1;
+}
+
+.cartDisplay {
+  position: relative;
+  float: right;
+  top: 9px;
+  left: 7px;
+  font-size: 20px;
+  color: red;
+  z-index: 2;
+}
+
+#home {
+  position: relative;
+  top: 5px;
+  color: white;
+  background-color: transparent;
+  border-color: transparent;
 }
