@@ -27,6 +27,12 @@ $nav.classList.add('navbar', 'navbar-inverse')
 $wrapper.appendChild($nav)
 
 var $cartQuantity = document.createElement('span')
+function createCart() {
+  $cartQuantity.textContent = app.cart.length
+  $cartQuantity.classList.add('cartDisplay')
+  $nav.appendChild($cartQuantity)
+}
+createCart()
 
 //list travel packages
 var $wrapperRow = document.createElement('div')
@@ -137,6 +143,8 @@ function createCheckoutProduct(cartedTravelPackage) {
   var $price = document.createElement('span')
   var $date = document.createElement('input')
 
+  $($date).daterangepicker()
+
   $div.classList.add('row')
 
   $img.setAttribute('src', cartedTravelPackage.img)
@@ -155,8 +163,6 @@ function createCheckoutProduct(cartedTravelPackage) {
   $div.appendChild($location)
   $div.appendChild($price)
   $div.appendChild($date)
-
-  $($date).daterangepicker()
 
   return $div
 }
@@ -228,21 +234,35 @@ function wrapperRowHandler(event) {
 
     if (event.target.id === app.travelPackages[i].id) {
       app.cart.push(app.travelPackages[i])
-      $cartQuantity.textContent = app.cart.length
-      $cartQuantity.classList.add('cartDisplay')
-      $nav.appendChild($cartQuantity)
+      createCart()
     }
   }
 }
 
 //confirm purchase handler
-var $paymentForm = document.querySelector('#paymentForm')
+var paymentForm = document.querySelector('#paymentForm')
 
 function confirmPurchase(event) {
   event.preventDefault()
   $('#myModal').modal('show')
 }
 
+//complete purchase and return to homepage
+var modal = document.querySelector('#myModal')
+
+function purchaseComplete(event) {
+  var button = document.querySelector('#Yes')
+  if (event.target.id === button.id) {
+    app.cart.length = 0
+    createCart()
+    hideCheckoutPage()
+    $wrapperRow.innerHTML = ""
+    renderDeals()
+    showDeals()
+  }
+}
+
 $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
-$paymentForm.addEventListener('submit', confirmPurchase)
+paymentForm.addEventListener('submit', confirmPurchase)
+modal.addEventListener('click', purchaseComplete)
