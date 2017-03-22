@@ -1,14 +1,16 @@
 //wrapper
 var $wrapper = document.createElement('div')
-document.body.appendChild($wrapper).classList.add('container')
+$wrapper.classList.add('container')
+document.body.appendChild($wrapper)
 
-//navbar home + cart
+//navbar with home and cart
 function createNavbar() {
   var $nav = document.createElement('nav')
   var $navCart = document.createElement('span')
   var $homeBtn = document.createElement('button')
 
   $navCart.classList.add('glyphicon', 'glyphicon-shopping-cart')
+  $navCart.id = 'cartIcon'
 
   $homeBtn.id = 'home'
   $homeBtn.textContent = 'HOME'
@@ -24,9 +26,9 @@ var $nav = createNavbar()
 $nav.classList.add('navbar', 'navbar-inverse')
 $wrapper.appendChild($nav)
 
-var $cartDisplay = document.createElement('span')
+var $cartQuantity = document.createElement('span')
 
-//list page
+//list travel packages
 var $wrapperRow = document.createElement('div')
 $wrapperRow.classList.add('row')
 $wrapper.appendChild($wrapperRow)
@@ -67,6 +69,7 @@ function renderDeals() {
 }
 
 renderDeals()
+
 //detail page
 function createDetailPage(travelPackage) {
   var $div = document.createElement('div')
@@ -102,31 +105,123 @@ function createDetailPage(travelPackage) {
   return $div
 }
 
-//return to home
-var homePage = document.getElementById('home')
-
-function backHome() {
-  $wrapperRow.innerHTML = ""
-  renderDeals()
+//calculate total
+function calculateTotal(cartedTravelPackage) {
+  var total = 0
+  for (var i = 0; i < cartedTravelPackage.length; i++) {
+    total += cartedTravelPackage[i].price
+  }
+  return total
 }
 
-//clickHandler for add to cart and render single page
-function clickHandler(event) {
+//display total
+function displayTotal() {
+  var $div = document.getElementById('viewtotal')
+  var $span = document.createElement('span')
+
+  var viewTotal = calculateTotal(app.cart)
+  $span.textContent = "Your Total is $" + viewTotal
+
+  $div.appendChild($span)
+
+  return $div
+}
+
+//create checkout product
+function createCheckoutProduct(cartedTravelPackage) {
+  var $div = document.createElement('div')
+  var $img = document.createElement('img')
+  var $location = document.createElement('span')
+  var $price = document.createElement('span')
+
+  $div.classList.add('row')
+
+  $img.setAttribute('src', cartedTravelPackage.img)
+  $img.classList.add('col-md-3', 'img-responsive')
+
+  $location.classList.add('div', 'col-md-6')
+
+  $price.classList.add('div', 'col-md-6')
+
+  $location.textContent = cartedTravelPackage.destination
+  $price.textContent = '$' + cartedTravelPackage.price
+
+  $div.appendChild($img)
+  $div.appendChild($location)
+  $div.appendChild($price)
+
+  return $div
+}
+
+//render checkout product
+function renderCheckoutProduct() {
+  for (var i = 0; i < app.cart.length; i++) {
+    var checkoutPackage = createCheckoutProduct(app.cart[i])
+    var $viewCheckoutProduct = document.getElementById('productCheckout')
+    $viewCheckoutProduct.appendChild(checkoutPackage)
+  }
+}
+
+//views
+function hideDeals(){
+  $wrapperRow.classList.add('hidden')
+}
+
+function showDeals(){
+  $wrapperRow.classList.remove('hidden')
+}
+
+function showCheckoutPage(){
+  displayTotal()
+  renderCheckoutProduct()
+  var $checkoutPage = document.getElementById('checkoutPage')
+  $checkoutPage.classList.remove('hidden')
+  $wrapper.appendChild($checkoutPage)
+}
+
+function hideCheckoutPage() {
+  var $checkoutPage = document.getElementById('checkoutPage')
+  $checkoutPage.classList.add('hidden')
+}
+
+//nav click handler: return home & display checkout page
+var homePage = document.getElementById('home')
+var cartIcon = document.getElementById('cartIcon')
+
+function navHandler(click) {
+  if (click.target === homePage) {
+    hideCheckoutPage()
+    $wrapperRow.innerHTML = ""
+    renderDeals()
+    showDeals()
+  }
+
+  if (click.target === cartIcon) {
+    hideDeals()
+    showCheckoutPage()
+  }
+}
+
+//wrapperRow click handler: detail page & display cart quantity
+function wrapperRowHandler(event) {
   for (var i = 0; i < app.travelPackages.length; i++) {
     if (event.target.id === app.travelPackages[i].destination) {
       $wrapperRow.innerHTML = ""
       var $div = createDetailPage(app.travelPackages[i])
-      $wrapperRow.appendChild($div).classList.add('container', 'spacing')
+      $div.classList.add('container', 'spacing')
+      $wrapperRow.appendChild($div)
       break;
+      hideCheckoutPage()
     }
 
     if (event.target.id === app.travelPackages[i].id) {
       app.cart.push(app.travelPackages[i])
-      $cartDisplay.textContent = app.cart.length
-      $nav.appendChild($cartDisplay).classList.add('cartDisplay')
+      $cartQuantity.textContent = app.cart.length
+      $cartQuantity.classList.add('cartDisplay')
+      $nav.appendChild($cartQuantity)
     }
   }
 }
 
-$wrapperRow.addEventListener('click', clickHandler)
-homePage.addEventListener('click', backHome)
+$wrapperRow.addEventListener('click', wrapperRowHandler)
+$nav.addEventListener('click', navHandler)

@@ -62,3 +62,14 @@
   background-color: transparent;
   border-color: transparent;
 }
+
+.hidden {
+  display: none;
+}
+
+#viewtotal {
+  margin-bottom: 10px;
+  font-size: 30px;
+  color: green;
+  text-align: center;
+}
