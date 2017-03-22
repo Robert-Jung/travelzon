@@ -119,6 +119,8 @@ function displayTotal() {
   var $div = document.getElementById('viewtotal')
   var $span = document.createElement('span')
 
+  $div.innerHTML = ""
+
   var viewTotal = calculateTotal(app.cart)
   $span.textContent = "Your Total is $" + viewTotal
 
@@ -155,9 +157,11 @@ function createCheckoutProduct(cartedTravelPackage) {
 
 //render checkout product
 function renderCheckoutProduct() {
+  var $viewCheckoutProduct = document.getElementById('productCheckout')
+  $viewCheckoutProduct.innerHTML = ""
+
   for (var i = 0; i < app.cart.length; i++) {
     var checkoutPackage = createCheckoutProduct(app.cart[i])
-    var $viewCheckoutProduct = document.getElementById('productCheckout')
     $viewCheckoutProduct.appendChild(checkoutPackage)
   }
 }
