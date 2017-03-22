@@ -135,6 +135,7 @@ function createCheckoutProduct(cartedTravelPackage) {
   var $img = document.createElement('img')
   var $location = document.createElement('span')
   var $price = document.createElement('span')
+  var $date = document.createElement('input')
 
   $div.classList.add('row')
 
@@ -151,6 +152,9 @@ function createCheckoutProduct(cartedTravelPackage) {
   $div.appendChild($img)
   $div.appendChild($location)
   $div.appendChild($price)
+  $div.appendChild($date)
+
+  $($date).daterangepicker()
 
   return $div
 }
