@@ -13,7 +13,7 @@
       </div>
       <div id="productCheckout" class="container, col-md-6">
       </div>
-      <div class="container, col-md-6">
+      <div id ="paymentForm" class="container, col-md-6">
         <form action="payment" method="post">
           <p class="row">
             <label>PAYMENT INFORMATION</label>
@@ -65,12 +65,27 @@
               </select>
             </label>
           </p>
+          <div class="confirmation">
+            <button class="btn btn-primary" data-toggle="modal" type="submit">Purchase</button>
+          </div>
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <h1>Confirm Purchase?</h1>
+                  <div class="modal-footer">
+                    <button id="Yes" type="button" class="btn btn-success">Yes</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+            </div>
+          </div>
         </form>
-      </div>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
   </body>

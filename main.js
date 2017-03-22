@@ -149,6 +149,8 @@ function createCheckoutProduct(cartedTravelPackage) {
   $location.textContent = cartedTravelPackage.destination
   $price.textContent = '$' + cartedTravelPackage.price
 
+  $date.id = 'daterange'
+
   $div.appendChild($img)
   $div.appendChild($location)
   $div.appendChild($price)
@@ -233,5 +235,14 @@ function wrapperRowHandler(event) {
   }
 }
 
+//confirm purchase handler
+var $paymentForm = document.querySelector('#paymentForm')
+
+function confirmPurchase(event) {
+  event.preventDefault()
+  $('#myModal').modal('show')
+}
+
 $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
+$paymentForm.addEventListener('submit', confirmPurchase)

@@ -1,3 +1,27 @@
+#home {
+  position: relative;
+  top: 5px;
+  color: white;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+#viewtotal {
+  margin-bottom: 10px;
+  font-size: 30px;
+  color: green;
+  text-align: center;
+}
+
+#paymentForm .row {
+  margin: 0;
+}
+
+#daterange {
+  width: 30%;
+  margin-left: 15px;
+}
+
 .resize {
   height: 300px;
   width: 700px;
@@ -55,21 +79,11 @@
   z-index: 2;
 }
 
-#home {
-  position: relative;
-  top: 5px;
-  color: white;
-  background-color: transparent;
-  border-color: transparent;
-}
-
 .hidden {
   display: none;
 }
 
-#viewtotal {
-  margin-bottom: 10px;
-  font-size: 30px;
-  color: green;
+h1 {
+  color: #a94442;
   text-align: center;
 }
