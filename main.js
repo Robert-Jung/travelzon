@@ -172,9 +172,11 @@ function showDeals(){
 }
 
 function showCheckoutPage(){
+  var $checkoutPage = document.getElementById('checkoutPage')
+
   displayTotal()
   renderCheckoutProduct()
-  var $checkoutPage = document.getElementById('checkoutPage')
+
   $checkoutPage.classList.remove('hidden')
   $wrapper.appendChild($checkoutPage)
 }
