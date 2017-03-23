@@ -112,23 +112,22 @@ function createDetailPage(travelPackage) {
   return $div
 }
 
-
-//checkout page
-function calculateTotal(cartedTravelPackage) {
+//checkout
+function calculateTotal() {
   var total = 0
-  for (var i = 0; i < cartedTravelPackage.length; i++) {
-    total += cartedTravelPackage[i].price
+  for (var i = 0; i < app.cart.length; i++) {
+    total += app.cart[i].price
   }
   return total
 }
 
-function displayTotal() {
+function displayTotal(total) {
   var $div = document.getElementById('viewtotal')
   var $span = document.createElement('span')
 
   $div.innerHTML = ""
 
-  var viewTotal = calculateTotal(app.cart)
+  var viewTotal = calculateTotal(total)
   $span.textContent = "Your Total is $" + viewTotal
 
   $div.appendChild($span)
