@@ -127,8 +127,7 @@ function displayTotal(total) {
 
   $div.innerHTML = ""
 
-  var viewTotal = calculateTotal(total)
-  $span.textContent = "Your Total is $" + viewTotal
+  $span.textContent = "Your Total is $" + total
 
   $div.appendChild($span)
 
@@ -179,13 +178,13 @@ function createCheckoutProduct(cartedTravelPackage) {
 }
 
 function renderCheckoutProduct() {
-  var $viewCheckoutProduct = document.getElementById('productCheckout')
-  $viewCheckoutProduct.innerHTML = ""
+  var $renderedProduct = document.createElement('div')
 
   for (var i = 0; i < app.cart.length; i++) {
     var checkoutPackage = createCheckoutProduct(app.cart[i])
-    $viewCheckoutProduct.appendChild(checkoutPackage)
+    $renderedProduct.appendChild(checkoutPackage)
   }
+  return $renderedProduct
 }
 
 //views
@@ -199,9 +198,14 @@ function showDeals(){
 
 function showCheckoutPage(){
   var $checkoutPage = document.getElementById('checkoutPage')
+  var $viewCheckoutProduct = document.getElementById('productCheckout')
+  $viewCheckoutProduct.innerHTML = ""
 
-  displayTotal()
-  renderCheckoutProduct()
+  var total = calculateTotal()
+  displayTotal(total)
+
+  var renderedProduct = renderCheckoutProduct()
+  $viewCheckoutProduct.appendChild(renderedProduct)
 
   $checkoutPage.classList.remove('hidden')
   $wrapper.appendChild($checkoutPage)
