@@ -135,6 +135,17 @@ function displayTotal() {
   return $div
 }
 
+//date range picker
+function dateRange(date) {
+  $(date).daterangepicker({
+      timePicker: true,
+      parentEl: '#productCheckout',
+      locale: {
+          format: 'MM/DD/YYYY h:mm A'
+      }
+  })
+}
+
 //create checkout product
 function createCheckoutProduct(cartedTravelPackage) {
   var $div = document.createElement('div')
@@ -143,7 +154,7 @@ function createCheckoutProduct(cartedTravelPackage) {
   var $price = document.createElement('span')
   var $date = document.createElement('input')
 
-  $($date).daterangepicker()
+  dateRange($date)
 
   $div.classList.add('row')
 
@@ -157,6 +168,8 @@ function createCheckoutProduct(cartedTravelPackage) {
   $location.textContent = cartedTravelPackage.destination
   $price.textContent = '$' + cartedTravelPackage.price
 
+  $date.setAttribute('type', 'text')
+  $date.setAttribute('name', 'daterange')
   $date.id = 'daterange'
 
   $div.appendChild($img)
