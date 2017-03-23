@@ -112,7 +112,8 @@ function createDetailPage(travelPackage) {
   return $div
 }
 
-//calculate total
+
+//checkout page
 function calculateTotal(cartedTravelPackage) {
   var total = 0
   for (var i = 0; i < cartedTravelPackage.length; i++) {
@@ -121,7 +122,6 @@ function calculateTotal(cartedTravelPackage) {
   return total
 }
 
-//display total
 function displayTotal() {
   var $div = document.getElementById('viewtotal')
   var $span = document.createElement('span')
@@ -136,7 +136,6 @@ function displayTotal() {
   return $div
 }
 
-//date range picker
 function dateRange(date) {
   $(date).daterangepicker({
       timePicker: true,
@@ -147,7 +146,6 @@ function dateRange(date) {
   })
 }
 
-//create checkout product
 function createCheckoutProduct(cartedTravelPackage) {
   var $div = document.createElement('div')
   var $img = document.createElement('img')
@@ -181,7 +179,6 @@ function createCheckoutProduct(cartedTravelPackage) {
   return $div
 }
 
-//render checkout product
 function renderCheckoutProduct() {
   var $viewCheckoutProduct = document.getElementById('productCheckout')
   $viewCheckoutProduct.innerHTML = ""
