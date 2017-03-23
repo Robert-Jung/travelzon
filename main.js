@@ -188,32 +188,33 @@ function renderCheckoutProduct() {
 }
 
 //views
-function hideDeals(){
-  $wrapperRow.classList.add('hidden')
-}
-
-function showDeals(){
-  $wrapperRow.classList.remove('hidden')
-}
-
-function showCheckoutPage(){
+function showViews(view) {
   var $checkoutPage = document.getElementById('checkoutPage')
   var $viewCheckoutProduct = document.getElementById('productCheckout')
-  $viewCheckoutProduct.innerHTML = ""
-
-  var total = calculateTotal()
-  displayTotal(total)
-
   var renderedProduct = renderCheckoutProduct()
-  $viewCheckoutProduct.appendChild(renderedProduct)
-
-  $checkoutPage.classList.remove('hidden')
-  $wrapper.appendChild($checkoutPage)
-}
-
-function hideCheckoutPage() {
-  var $checkoutPage = document.getElementById('checkoutPage')
-  $checkoutPage.classList.add('hidden')
+    if (view === cartIcon) {
+      $wrapperRow.classList.add('hidden')
+      $viewCheckoutProduct.innerHTML = ""
+      var total = calculateTotal()
+      displayTotal(total)
+      $viewCheckoutProduct.appendChild(renderedProduct)
+      $checkoutPage.classList.remove('hidden')
+      $wrapper.appendChild($checkoutPage)
+    } else if (view === 'showDeals') {
+      $wrapperRow.classList.remove('hidden')
+    } else if (view === homePage) {
+      $checkoutPage.classList.add('hidden')
+      $wrapperRow.innerHTML = ""
+      renderDeals()
+      $wrapperRow.classList.remove('hidden')
+    } else {
+      app.cart.length = 0
+      createCart()
+      $checkoutPage.classList.add('hidden')
+      $wrapperRow.innerHTML = ""
+      renderDeals()
+      $wrapperRow.classList.remove('hidden')
+    }
 }
 
 //nav click handler: return home & display checkout page
@@ -222,15 +223,11 @@ var cartIcon = document.getElementById('cartIcon')
 
 function navHandler(click) {
   if (click.target === homePage) {
-    hideCheckoutPage()
-    $wrapperRow.innerHTML = ""
-    renderDeals()
-    showDeals()
+    showViews(click.target)
   }
 
   if (click.target === cartIcon) {
-    hideDeals()
-    showCheckoutPage()
+    showViews(click.target)
   }
 }
 
@@ -267,12 +264,7 @@ var modal = document.querySelector('#myModal')
 function purchaseComplete(event) {
   var button = document.querySelector('#Yes')
   if (event.target.id === button.id) {
-    app.cart.length = 0
-    createCart()
-    hideCheckoutPage()
-    $wrapperRow.innerHTML = ""
-    renderDeals()
-    showDeals()
+    showViews(event.target.id)
   }
 }
 
