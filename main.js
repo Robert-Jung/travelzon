@@ -9,6 +9,8 @@ function createNavbar() {
   var $navCart = document.createElement('span')
   var $homeBtn = document.createElement('button')
 
+  $nav.classList.add('navbar', 'navbar-inverse')
+
   $navCart.classList.add('glyphicon', 'glyphicon-shopping-cart')
   $navCart.id = 'cartIcon'
 
@@ -23,7 +25,6 @@ function createNavbar() {
 }
 
 var $nav = createNavbar()
-$nav.classList.add('navbar', 'navbar-inverse')
 $wrapper.appendChild($nav)
 
 var $cartQuantity = document.createElement('span')
