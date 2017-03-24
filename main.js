@@ -263,8 +263,27 @@ var modal = document.querySelector('#myModal')
 
 function purchaseComplete(event) {
   var button = document.querySelector('#Yes')
+  var $form = document.querySelector('#paymentForm')
+
   if (event.target.id === button.id) {
+    clearInput($form)
     showViews(event.target.id)
+  }
+}
+
+var form = document.querySelector('#paymentForm')
+
+function clearInput(form){
+  var $select = form.querySelector('select')
+  $select.selectedIndex = 0
+
+  var $input = form.querySelectorAll('input')
+  for (var i = 0; i < $input.length; i++) {
+    if ($input[i].type === 'text' || $input[i].type === 'password') {
+      $input[i].value = ''
+    } else if ($input[i].type === 'radio') {
+      $input[i].checked = false
+    }
   }
 }
 
