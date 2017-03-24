@@ -1,14 +1,18 @@
 //wrapper
 var $wrapper = document.createElement('div')
-document.body.appendChild($wrapper).classList.add('container')
+$wrapper.classList.add('container')
+document.body.appendChild($wrapper)
 
-//navbar home + cart
+//navbar with home and cart
 function createNavbar() {
   var $nav = document.createElement('nav')
   var $navCart = document.createElement('span')
   var $homeBtn = document.createElement('button')
 
+  $nav.classList.add('navbar', 'navbar-inverse')
+
   $navCart.classList.add('glyphicon', 'glyphicon-shopping-cart')
+  $navCart.id = 'cartIcon'
 
   $homeBtn.id = 'home'
   $homeBtn.textContent = 'HOME'
@@ -21,12 +25,17 @@ function createNavbar() {
 }
 
 var $nav = createNavbar()
-$nav.classList.add('navbar', 'navbar-inverse')
 $wrapper.appendChild($nav)
 
-var $cartDisplay = document.createElement('span')
+var $cartQuantity = document.createElement('span')
+function createCart() {
+  $cartQuantity.textContent = app.cart.length
+  $cartQuantity.classList.add('cartDisplay')
+  $nav.appendChild($cartQuantity)
+}
+createCart()
 
-//list page
+//list travel packages
 var $wrapperRow = document.createElement('div')
 $wrapperRow.classList.add('row')
 $wrapper.appendChild($wrapperRow)
@@ -67,6 +76,7 @@ function renderDeals() {
 }
 
 renderDeals()
+
 //detail page
 function createDetailPage(travelPackage) {
   var $div = document.createElement('div')
@@ -102,31 +112,163 @@ function createDetailPage(travelPackage) {
   return $div
 }
 
-//return to home
-var homePage = document.getElementById('home')
-
-function backHome() {
-  $wrapperRow.innerHTML = ""
-  renderDeals()
+//checkout
+function calculateTotal() {
+  var total = 0
+  for (var i = 0; i < app.cart.length; i++) {
+    total += app.cart[i].price
+  }
+  return total
 }
 
-//clickHandler for add to cart and render single page
-function clickHandler(event) {
+function displayTotal(total) {
+  var $div = document.getElementById('viewtotal')
+  var $span = document.createElement('span')
+
+  $div.innerHTML = ""
+
+  $span.textContent = "Your Total is $" + total
+
+  $div.appendChild($span)
+
+  return $div
+}
+
+function dateRange(date) {
+  $(date).daterangepicker({
+      timePicker: true,
+      parentEl: '#productCheckout',
+      locale: {
+          format: 'MM/DD/YYYY h:mm A'
+      }
+  })
+}
+
+function createCheckoutProduct(cartedTravelPackage) {
+  var $div = document.createElement('div')
+  var $img = document.createElement('img')
+  var $location = document.createElement('span')
+  var $price = document.createElement('span')
+  var $date = document.createElement('input')
+
+  dateRange($date)
+
+  $div.classList.add('row')
+
+  $img.setAttribute('src', cartedTravelPackage.img)
+  $img.classList.add('col-md-3', 'img-responsive')
+
+  $location.classList.add('div', 'col-md-6')
+
+  $price.classList.add('div', 'col-md-6')
+
+  $location.textContent = cartedTravelPackage.destination
+  $price.textContent = '$' + cartedTravelPackage.price
+
+  $date.setAttribute('type', 'text')
+  $date.setAttribute('name', 'daterange')
+  $date.id = 'daterange'
+
+  $div.appendChild($img)
+  $div.appendChild($location)
+  $div.appendChild($price)
+  $div.appendChild($date)
+
+  return $div
+}
+
+function renderCheckoutProduct() {
+  var $renderedProduct = document.createElement('div')
+
+  for (var i = 0; i < app.cart.length; i++) {
+    var checkoutPackage = createCheckoutProduct(app.cart[i])
+    $renderedProduct.appendChild(checkoutPackage)
+  }
+  return $renderedProduct
+}
+
+//views
+function showViews(view) {
+  var $checkoutPage = document.getElementById('checkoutPage')
+  var $viewCheckoutProduct = document.getElementById('productCheckout')
+  var renderedProduct = renderCheckoutProduct()
+    if (view === cartIcon) {
+      $wrapperRow.classList.add('hidden')
+      $viewCheckoutProduct.innerHTML = ""
+      var total = calculateTotal()
+      displayTotal(total)
+      $viewCheckoutProduct.appendChild(renderedProduct)
+      $checkoutPage.classList.remove('hidden')
+      $wrapper.appendChild($checkoutPage)
+    } else if (view === 'showDeals') {
+      $wrapperRow.classList.remove('hidden')
+    } else if (view === homePage) {
+      $checkoutPage.classList.add('hidden')
+      $wrapperRow.innerHTML = ""
+      renderDeals()
+      $wrapperRow.classList.remove('hidden')
+    } else {
+      app.cart.length = 0
+      createCart()
+      $checkoutPage.classList.add('hidden')
+      $wrapperRow.innerHTML = ""
+      renderDeals()
+      $wrapperRow.classList.remove('hidden')
+    }
+}
+
+//nav click handler: return home & display checkout page
+var homePage = document.getElementById('home')
+var cartIcon = document.getElementById('cartIcon')
+
+function navHandler(click) {
+  if (click.target === homePage) {
+    showViews(click.target)
+  }
+
+  if (click.target === cartIcon) {
+    showViews(click.target)
+  }
+}
+
+//wrapperRow click handler: detail page & display cart quantity
+function wrapperRowHandler(event) {
   for (var i = 0; i < app.travelPackages.length; i++) {
     if (event.target.id === app.travelPackages[i].destination) {
       $wrapperRow.innerHTML = ""
       var $div = createDetailPage(app.travelPackages[i])
-      $wrapperRow.appendChild($div).classList.add('container', 'spacing')
+      $div.classList.add('container', 'spacing')
+      $wrapperRow.appendChild($div)
       break;
+      hideCheckoutPage()
     }
 
     if (event.target.id === app.travelPackages[i].id) {
       app.cart.push(app.travelPackages[i])
-      $cartDisplay.textContent = app.cart.length
-      $nav.appendChild($cartDisplay).classList.add('cartDisplay')
+      createCart()
     }
   }
 }
 
-$wrapperRow.addEventListener('click', clickHandler)
-homePage.addEventListener('click', backHome)
+//confirm purchase handler
+var paymentForm = document.querySelector('#paymentForm')
+
+function confirmPurchase(event) {
+  event.preventDefault()
+  $('#myModal').modal('show')
+}
+
+//complete purchase and return to homepage
+var modal = document.querySelector('#myModal')
+
+function purchaseComplete(event) {
+  var button = document.querySelector('#Yes')
+  if (event.target.id === button.id) {
+    showViews(event.target.id)
+  }
+}
+
+$wrapperRow.addEventListener('click', wrapperRowHandler)
+$nav.addEventListener('click', navHandler)
+paymentForm.addEventListener('submit', confirmPurchase)
+modal.addEventListener('click', purchaseComplete)

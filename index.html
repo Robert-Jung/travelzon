@@ -4,9 +4,88 @@
     <meta charset="utf-8" />
     <title>Travelzon</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <link rel="stylesheet" href="default.css"/>
   </head>
   <body>
+    <div id="checkoutPage" class="container hidden">
+      <div id="viewtotal" class="row">
+      </div>
+      <div id="productCheckout" class="container, col-md-6">
+      </div>
+      <div id ="paymentForm" class="container, col-md-6">
+        <form action="payment" method="post">
+          <p class="row">
+            <label>PAYMENT INFORMATION</label>
+          </p>
+          <p class="row">
+            <label>
+              <input type="radio" name="title" value="Mr">
+              Mr.
+            </label>
+            <label>
+              <input type ="radio" name="title" value="Ms">
+              Ms.
+            </label>
+            <label>
+              <input type="radio" name="title" value="Mrs">
+              Mrs.
+            </label>
+          </p>
+          <p class="row">
+            <label>
+              <input type="text" name="first name" placeholder="First Name">
+              <input type="text" name="last name" placeholder="Last Name">
+              <input type="text" name="email" placeholder="Email">
+            </label>
+          </p>
+          <p class="row">
+            <label>
+              <input type="text" name="address" placeholder="Address">
+              <input type="text" name="apt" placeholder="Address 2">
+            </label>
+          </p>
+          <p class="row">
+            <label>
+              <input type="text" name="city" placeholder="City">
+              <input type="text" name="state" placeholder="State">
+              <input type="text" name="zip" placeholder="Zip Code">
+            </label>
+          </p>
+          <p class="row">
+            <label>
+              <input type="text" name="cc" placeholder="Credit Card Number">
+              <input type="password" name="securityNum" placeholder="Security #">
+              <select placeholder="exp date">
+                <option>01/2018</option>
+                <option>02/2018</option>
+                <option>03/2018</option>
+                <option>04/2018</option>
+                <option>05/2018</option>
+              </select>
+            </label>
+          </p>
+          <div class="confirmation">
+            <button class="btn btn-primary" data-toggle="modal" type="submit">Purchase</button>
+          </div>
+          <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <h1>Confirm Purchase?</h1>
+                  <div class="modal-footer">
+                    <button id="Yes" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
   </body>
