@@ -264,7 +264,6 @@ var paymentForm = document.querySelector('#paymentForm')
 
 function confirmPurchase(event) {
   event.preventDefault()
-  var $form = document.querySelector('#paymentForm')
   $('#myModal').modal('show')
 }
 
@@ -273,16 +272,15 @@ var modal = document.querySelector('#myModal')
 
 function purchaseComplete(event) {
   var button = document.querySelector('#Yes')
-  var $form = document.querySelector('#paymentForm')
 
   if (event.target.id === button.id) {
-    clearInput($form)
+    clearInput(paymentForm)
     showViews(event.target.id)
   }
 }
 
 function clearInput(form){
-  var form = document.querySelector('#paymentForm')
+  var form = paymentForm
 
   var $select = form.querySelector('select')
   $select.selectedIndex = 0
@@ -297,21 +295,36 @@ function clearInput(form){
   }
 }
 
-$wrapperRow.addEventListener('click', wrapperRowHandler)
-$nav.addEventListener('click', navHandler)
-paymentForm.addEventListener('submit', confirmPurchase)
-modal.addEventListener('click', purchaseComplete)
-
-
+//form validity
 var creditCard = document.querySelector('#creditCard')
 
-creditCard.addEventListener('keyup', function(event) {
+function checkCreditCard(event){
   var value = event.target.value
   var creditCardConstraint = /\b\d{16}\b/
 
-if (creditCardConstraint.test(value) === true) {
-  event.target.setCustomValidity('')
-} else {
-  event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+  if (creditCardConstraint.test(value) === true) {
+    event.target.setCustomValidity('')
+  } else {
+    event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+  }
 }
-})
+
+var securityCode = document.querySelector('#securityCode')
+
+function checkSecurityCode(event){
+  var value = event.target.value
+  var pinConstraint = /\b\d{3}\b/
+
+  if (pinConstraint.test(value) === true) {
+    event.target.setCustomValidity('')
+  } else {
+    event.target.setCustomValidity('Please enter the 3 digits located on the back of your credit card.')
+  }
+}
+
+$wrapperRow.addEventListener('click', wrapperRowHandler)
+$nav.addEventListener('click', navHandler)
+paymentForm.addEventListener('submit', confirmPurchase)
+creditCard.addEventListener('keyup', checkCreditCard)
+securityCode.addEventListener('keyup', checkSecurityCode)
+modal.addEventListener('click', purchaseComplete)
