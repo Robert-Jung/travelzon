@@ -137,11 +137,18 @@ function displayTotal(total) {
 function dateRange(date) {
   $(date).daterangepicker({
       timePicker: true,
-      parentEl: '#productCheckout',
       locale: {
           format: 'MM/DD/YYYY h:mm A'
       }
   })
+}
+
+function removeDatepickers() {
+  var datepickers = document.querySelectorAll('.daterangepicker')
+
+  for (var i = 0; i < datepickers.length; i++) {
+  datepickers[i].remove()
+  }
 }
 
 function createCheckoutProduct(cartedTravelPackage) {
@@ -191,8 +198,10 @@ function renderCheckoutProduct() {
 function showViews(view) {
   var $checkoutPage = document.getElementById('checkoutPage')
   var $viewCheckoutProduct = document.getElementById('productCheckout')
-  var renderedProduct = renderCheckoutProduct()
+
     if (view === cartIcon) {
+      removeDatepickers()
+      var renderedProduct = renderCheckoutProduct()
       $wrapperRow.classList.add('hidden')
       $viewCheckoutProduct.innerHTML = ""
       var total = calculateTotal()
@@ -255,6 +264,7 @@ var paymentForm = document.querySelector('#paymentForm')
 
 function confirmPurchase(event) {
   event.preventDefault()
+  var $form = document.querySelector('#paymentForm')
   $('#myModal').modal('show')
 }
 
@@ -271,15 +281,15 @@ function purchaseComplete(event) {
   }
 }
 
-var form = document.querySelector('#paymentForm')
-
 function clearInput(form){
+  var form = document.querySelector('#paymentForm')
+
   var $select = form.querySelector('select')
   $select.selectedIndex = 0
 
   var $input = form.querySelectorAll('input')
   for (var i = 0; i < $input.length; i++) {
-    if ($input[i].type === 'text' || $input[i].type === 'password') {
+    if ($input[i].type === 'text' || $input[i].type === 'password' || $input[i].type === 'email') {
       $input[i].value = ''
     } else if ($input[i].type === 'radio') {
       $input[i].checked = false
@@ -291,3 +301,17 @@ $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
 paymentForm.addEventListener('submit', confirmPurchase)
 modal.addEventListener('click', purchaseComplete)
+
+
+var creditCard = document.querySelector('#creditCard')
+
+creditCard.addEventListener('keyup', function(event) {
+  var value = event.target.value
+  var creditCardConstraint = /\b\d{16}\b/
+
+if (creditCardConstraint.test(value) === true) {
+  event.target.setCustomValidity('')
+} else {
+  event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+}
+})
