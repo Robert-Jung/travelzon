@@ -322,9 +322,37 @@ function checkSecurityCode(event){
   }
 }
 
+var zipCode = document.querySelector('#zipCode')
+
+function checkZip(event){
+  var value = event.target.value
+  var zipConstraint = /\b\d{5}\b/
+
+  if (zipConstraint.test(value) === true) {
+    event.target.setCustomValidity('')
+  } else {
+    event.target.setCustomValidity('Please enter a 5 digit postal code')
+  }
+}
+
+var state = document.querySelector('#state')
+
+function checkState(event){
+  var value = event.target.value
+  var stateConstraint = /^[A-Za-z]{2}\b/
+
+  if (stateConstraint.test(value) === true) {
+    event.target.setCustomValidity('')
+  } else {
+    event.target.setCustomValidity('Please enter two letters')
+  }
+}
+
 $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
 paymentForm.addEventListener('submit', confirmPurchase)
 creditCard.addEventListener('keyup', checkCreditCard)
 securityCode.addEventListener('keyup', checkSecurityCode)
+zipCode.addEventListener('keyup', checkZip)
+state.addEventListener('keyup', checkState)
 modal.addEventListener('click', purchaseComplete)
