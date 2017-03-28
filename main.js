@@ -295,64 +295,49 @@ function clearInput(form){
   }
 }
 
-//form validity
-var creditCard = document.querySelector('#creditCard')
-
-function checkCreditCard(event){
+function checkValidity(event) {
+  var target = event.target.id
   var value = event.target.value
-  var creditCardConstraint = /\b\d{16}\b/
 
-  if (creditCardConstraint.test(value) === true) {
-    event.target.setCustomValidity('')
-  } else {
-    event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+  if (target === 'validity') {
+    var stateConstraint = /^[A-Za-z]{2}\b/
+    if (stateConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter two letters')
+    }
   }
-}
 
-var securityCode = document.querySelector('#securityCode')
-
-function checkSecurityCode(event){
-  var value = event.target.value
-  var pinConstraint = /\b\d{3}\b/
-
-  if (pinConstraint.test(value) === true) {
-    event.target.setCustomValidity('')
-  } else {
-    event.target.setCustomValidity('Please enter the 3 digits located on the back of your credit card.')
+  if (target === 'zipCode') {
+    var zipConstraint = /\b\d{5}\b/
+    if (zipConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter a 5 digit postal code')
+    }
   }
-}
 
-var zipCode = document.querySelector('#zipCode')
-
-function checkZip(event){
-  var value = event.target.value
-  var zipConstraint = /\b\d{5}\b/
-
-  if (zipConstraint.test(value) === true) {
-    event.target.setCustomValidity('')
-  } else {
-    event.target.setCustomValidity('Please enter a 5 digit postal code')
+  if (target === 'creditCard') {
+    var creditCardConstraint = /\b\d{16}\b/
+    if (creditCardConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+    }
   }
-}
 
-var state = document.querySelector('#state')
-
-function checkState(event){
-  var value = event.target.value
-  var stateConstraint = /^[A-Za-z]{2}\b/
-
-  if (stateConstraint.test(value) === true) {
-    event.target.setCustomValidity('')
-  } else {
-    event.target.setCustomValidity('Please enter two letters')
+  if (target === 'securityCode') {
+    var pinConstraint = /\b\d{3}\b/
+    if (pinConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter the 3 digits located on the back of your credit card.')
+    }
   }
 }
 
 $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
 paymentForm.addEventListener('submit', confirmPurchase)
-creditCard.addEventListener('keyup', checkCreditCard)
-securityCode.addEventListener('keyup', checkSecurityCode)
-zipCode.addEventListener('keyup', checkZip)
-state.addEventListener('keyup', checkState)
+paymentForm.addEventListener('keyup', checkValidity )
 modal.addEventListener('click', purchaseComplete)
