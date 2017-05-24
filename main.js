@@ -137,11 +137,18 @@ function displayTotal(total) {
 function dateRange(date) {
   $(date).daterangepicker({
       timePicker: true,
-      parentEl: '#productCheckout',
       locale: {
           format: 'MM/DD/YYYY h:mm A'
       }
   })
+}
+
+function removeDatepickers() {
+  var datepickers = document.querySelectorAll('.daterangepicker')
+
+  for (var i = 0; i < datepickers.length; i++) {
+  datepickers[i].remove()
+  }
 }
 
 function createCheckoutProduct(cartedTravelPackage) {
@@ -191,8 +198,10 @@ function renderCheckoutProduct() {
 function showViews(view) {
   var $checkoutPage = document.getElementById('checkoutPage')
   var $viewCheckoutProduct = document.getElementById('productCheckout')
-  var renderedProduct = renderCheckoutProduct()
+
     if (view === cartIcon) {
+      removeDatepickers()
+      var renderedProduct = renderCheckoutProduct()
       $wrapperRow.classList.add('hidden')
       $viewCheckoutProduct.innerHTML = ""
       var total = calculateTotal()
@@ -263,12 +272,72 @@ var modal = document.querySelector('#myModal')
 
 function purchaseComplete(event) {
   var button = document.querySelector('#Yes')
+
   if (event.target.id === button.id) {
+    clearInput(paymentForm)
     showViews(event.target.id)
+  }
+}
+
+function clearInput(form){
+  var form = paymentForm
+
+  var $select = form.querySelector('select')
+  $select.selectedIndex = 0
+
+  var $input = form.querySelectorAll('input')
+  for (var i = 0; i < $input.length; i++) {
+    if ($input[i].type === 'text' || $input[i].type === 'password' || $input[i].type === 'email') {
+      $input[i].value = ''
+    } else if ($input[i].type === 'radio') {
+      $input[i].checked = false
+    }
+  }
+}
+
+function checkValidity(event) {
+  var target = event.target.id
+  var value = event.target.value
+
+  if (target === 'validity') {
+    var stateConstraint = /^[A-Za-z]{2}\b/
+    if (stateConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter two letters')
+    }
+  }
+
+  if (target === 'zipCode') {
+    var zipConstraint = /\b\d{5}\b/
+    if (zipConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter a 5 digit postal code')
+    }
+  }
+
+  if (target === 'creditCard') {
+    var creditCardConstraint = /\b\d{16}\b/
+    if (creditCardConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter the 16 digits located on the front of your credit card.')
+    }
+  }
+
+  if (target === 'securityCode') {
+    var pinConstraint = /\b\d{3}\b/
+    if (pinConstraint.test(value) === true) {
+      event.target.setCustomValidity('')
+    } else {
+      event.target.setCustomValidity('Please enter the 3 digits located on the back of your credit card.')
+    }
   }
 }
 
 $wrapperRow.addEventListener('click', wrapperRowHandler)
 $nav.addEventListener('click', navHandler)
 paymentForm.addEventListener('submit', confirmPurchase)
+paymentForm.addEventListener('keyup', checkValidity )
 modal.addEventListener('click', purchaseComplete)
